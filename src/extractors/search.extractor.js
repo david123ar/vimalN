@@ -3,10 +3,37 @@ import * as cheerio from "cheerio";
 import { DEFAULT_HEADERS } from "../configs/header.config.js";
 import baseUrl from "../utils/baseUrl.js";
 
-async function extractSearchResults(search, page) {
+async function extractSearchResults(
+  search,
+  type,
+  status,
+  rated,
+  score,
+  season,
+  language,
+  sy,
+  sm,
+  sd,
+  ey,
+  em,
+  ed,
+  sort,
+  genres,
+  page
+) {
   try {
     const resp = await axios.get(
-      `${baseUrl}/search?keyword=${search}&page=${page}`,
+      `${baseUrl}/search?keyword=${search}&page=${page}${
+        type ? `&type=${type}` : ""
+      }${status ? `&status=${status}` : ""}${rated ? `&rated=${rated}` : ""}${
+        score ? `&score=${score}` : ""
+      }${season ? `&season=${season}` : ""}${
+        language ? `&language=${language}` : ""
+      }${sy ? `&sy=${sy}` : ""}${sm ? `&sm=${sm}` : ""}${
+        sd ? `&sd=${sd}` : ""
+      }${ey ? `&ey=${ey}` : ""}${em ? `&em=${em}` : ""}${
+        ed ? `&ed=${ed}` : ""
+      }${sort ? `&sort=${sort}` : ""}${genres ? `&genres=${genres}` : ""}`,
       {
         headers: {
           Accept:
@@ -35,14 +62,16 @@ async function extractSearchResults(search, page) {
             ?.trim()
       ) || 1;
 
+    const totalResults =
+      $(".block_area-header .bah-result span")?.text()?.trim() || [];
+
     const result = [];
     $(elements).each((_, el) => {
       const id =
         $(el)
           .find(".film-detail .film-name .dynamic-name")
           ?.attr("href")
-          ?.slice(1)
-          .split("?ref=search")[0] || null;
+          ?.slice(1) || null;
       result.push({
         id: id,
         title: $(el)
@@ -101,7 +130,11 @@ async function extractSearchResults(search, page) {
       });
     });
 
-    return [parseInt(totalPage, 10), result.length > 0 ? result : []];
+    return [
+      parseInt(totalPage, 10),
+      totalResults,
+      result.length > 0 ? result : [],
+    ];
   } catch (e) {
     console.error(e);
     return e;

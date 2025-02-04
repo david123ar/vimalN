@@ -4,6 +4,7 @@ import * as topTenController from "../controllers/topten.controller.js";
 import * as animeInfoController from "../controllers/animeInfo.controller.js";
 import * as streamController from "../controllers/streamInfo.controller.js";
 import * as searchController from "../controllers/search.controller.js";
+import * as filterController from "../controllers/filter.controller.js";
 import * as episodeListController from "../controllers/episodeList.controller.js";
 import * as suggestionsController from "../controllers/suggestion.controller.js";
 import * as scheduleController from "../controllers/schedule.controller.js";
@@ -49,6 +50,7 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/servers/:id", serversController.getServers);
   createRoute("/api/stream", streamController.getStreamInfo);
   createRoute("/api/search", searchController.search);
+  createRoute("/api/filter", filterController.filter);
   createRoute("/api/search/suggest", suggestionsController.getSuggestions);
   createRoute("/api/schedule", scheduleController.getSchedule);
   createRoute(
