@@ -12,7 +12,7 @@ async function extractFilterResults(
   season,
   language,
   sy,
-  sm,
+  sm, 
   sd,
   ey,
   em,
