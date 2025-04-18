@@ -10,7 +10,7 @@ export default async function extractNextEpisodeSchedule(id) {
     const $ = cheerio.load(data);
     const nextEpisodeSchedule = $(
       ".schedule-alert > .alert.small > span:last"
-    ).text().trim();
+    ).attr("data-value");
     return nextEpisodeSchedule;
   } catch (error) {
     console.error(error);
