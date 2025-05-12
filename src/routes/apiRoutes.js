@@ -16,7 +16,6 @@ import * as producerController from "../controllers/producer.controller.js";
 import * as characterListController from "../controllers/voiceactor.controller.js";
 import * as nextEpisodeScheduleController from "../controllers/nextEpisodeSchedule.controller.js";
 import { routeTypes } from "./category.route.js";
-import { getWatchlist } from "../controllers/watchlist.controller.js";
 import getTopSearch from "../controllers/topsearch.controller.js";
 
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
